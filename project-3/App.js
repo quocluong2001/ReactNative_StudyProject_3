@@ -4,6 +4,7 @@ import AppLoading from 'expo-app-loading'
 
 import fetchFonts from './utils/fetchFonts';
 import CategoriesScreen from './screens/CategoriesScreen'
+import MealsNavigator from './navigation/MealsNavigators';
 
 const useFonts = async () => {
   await fetchFonts()
@@ -23,7 +24,7 @@ export default function App() {
   }
 
   return (
-    <CategoriesScreen />
+    <MealsNavigator />
   );
 }
 
