@@ -1,32 +1,30 @@
 import React from 'react'
 import {
-    View,
-    Text,
     StyleSheet,
     FlatList,
-    TouchableOpacity
 } from 'react-native'
+import { HeaderButtons, Item } from 'react-navigation-header-buttons'
 
 import { CATEGORIES } from '../data/dummy-data'
+import CategoryGridTile from '../components/CategoryGridTile'
+import HeaderTitleText from '../components/HeaderTitleText'
+import CustomHeaderButton from '../components/CustomHeaderButton'
 
 const CategoriesScreen = props => {
-    console.log(CATEGORIES)
     const renderListItem = itemData => {
         return (
-            <TouchableOpacity style={styles.gridItem} onPress={() => {
-                props.navigation.navigate({
-                    routeName: 'CategoryMeals',
-                    params: {
-                        CategoryId: itemData.item.id
-                    }
-                })
-            }}>
-                <View>
-                    <Text>
-                        {itemData.item.title}
-                    </Text>
-                </View>
-            </TouchableOpacity>
+            <CategoryGridTile
+                color={itemData.item.color}
+                title={itemData.item.title}
+                onSelect={() => {
+                    props.navigation.navigate({
+                        routeName: 'CategoryMeals',
+                        params: {
+                            CategoryId: itemData.item.id
+                        }
+                    })
+                }}
+            />
         )
     }
 
@@ -41,7 +39,27 @@ const CategoriesScreen = props => {
 
 CategoriesScreen.navigationOptions = navigationData => {
     return {
-        headerTitle: 'Meal Categories',
+        headerTitle: () => {
+            return (
+                <HeaderTitleText>
+                    Meal Categories
+                </HeaderTitleText>
+            )
+        },
+        headerLeft: () => {
+            return (
+                <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+                    <Item
+                        title='Menu'
+                        iconName='menu'
+                        iconSize={25}
+                        onPress={() => {
+                            navigationData.navigation.toggleDrawer()
+                        }}
+                    />
+                </HeaderButtons>
+            )
+        }
     }
 }
 
@@ -51,12 +69,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
-
-    gridItem: {
-        flex: 1,
-        margin: 15,
-        height: 150,
-    }
 })
 
 export default CategoriesScreen

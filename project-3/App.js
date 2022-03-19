@@ -1,9 +1,9 @@
-import { React, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import AppLoading from 'expo-app-loading'
+import  React, { useState } from 'react';
+import { StyleSheet } from 'react-native';
+import AppLoading from 'expo-app-loading';
 
 import fetchFonts from './utils/fetchFonts';
-import MealsNavigator from './navigation/MealsNavigators';
+import MainNavigator from './navigation/MealsNavigators';
 
 const useFonts = async () => {
   await fetchFonts()
@@ -23,7 +23,7 @@ export default function App() {
   }
 
   return (
-    <MealsNavigator />
+    <MainNavigator />
   );
 }
 
