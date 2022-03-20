@@ -7,6 +7,9 @@ import {
     ImageBackground,
 } from "react-native";
 
+import DefaultText from "./DefaultText";
+import { Ionicons } from "@expo/vector-icons";
+
 const MealItem = props => {
     return (
         <TouchableOpacity onPress={props.onSelectMeal} activeOpacity={0.7}>
@@ -28,9 +31,18 @@ const MealItem = props => {
                     </ImageBackground>
                 </View>
                 <View style={styles.mealDetail}>
-                    <Text style={styles.mealDetailText}>{props.duration}m</Text>
-                    <Text style={styles.mealDetailText}>{props.complexity.toUpperCase()}</Text>
-                    <Text style={styles.mealDetailText}>{props.affordability.toUpperCase()}</Text>
+                    <DefaultText>
+                        <Ionicons name="time-outline" size={23} color="black" />
+                        {props.duration}m
+                    </DefaultText>
+                    <DefaultText>
+                        <Ionicons name="create-outline" size={23} color="black" />
+                        {props.complexity.toUpperCase()}
+                    </DefaultText>
+                    <DefaultText>
+                        <Ionicons name="cash-outline" size={23} color="black" />
+                        {props.affordability.toUpperCase()}
+                    </DefaultText>
                 </View>
             </View>
         </TouchableOpacity>
@@ -68,9 +80,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: "center",
         justifyContent: 'space-between',
-    },
-    mealDetailText: {
-        fontFamily: 'open-sans-bold'
     },
 })
 
