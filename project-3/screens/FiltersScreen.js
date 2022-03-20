@@ -80,10 +80,10 @@ FiltersScreen.navigationOptions = navigationData => {
                 <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
                     <Item
                         title='Save'
-                        iconName='ios-save'
+                        iconName='save'
                         iconSize={23}
-                        onPress={() => {
-                        }}
+                        onPress={() => { }}
+                        buttonStyle={styles.headerSaveButton}
                     />
                 </HeaderButtons>
             )
@@ -96,6 +96,9 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center'
     },
+    headerSaveButton: {
+        fontFamily: 'open-sans',
+    },  
     filterContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
