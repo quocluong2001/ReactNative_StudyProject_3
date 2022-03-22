@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { View, Text, StyleSheet, Switch } from 'react-native'
 import { HeaderButtons, Item } from 'react-navigation-header-buttons'
 
@@ -12,7 +12,7 @@ const FilterItem = props => {
             <Switch
                 value={props.value}
                 onValueChange={props.onChange}
-                trackColor={{true: 'blue', false: 'gray'}}
+                trackColor={{ true: 'blue', false: 'gray' }}
                 thumbColor='blue'
                 style={styles.switch}
             />
@@ -26,24 +26,38 @@ const FiltersScreen = props => {
     const [isVegetarian, setIsVegetarian] = useState(false)
     const [isLactoseFree, setIsLactoseFree] = useState(false)
 
+    const saveFilters = useCallback(() => {
+        const appliedFilters = {
+            glutenFree: isGlutenFree,
+            vegan: isVegan,
+            vegetarian: isVegetarian,
+            lactoseFree: isLactoseFree,
+        }
+        console.log(appliedFilters)
+    }, [isGlutenFree, isVegan, isVegetarian, isLactoseFree])
+
+    useEffect(() => {
+        props.navigation.setParams({ save: saveFilters })
+    }, [saveFilters])
+
     return (
         <View style={styles.screen}>
-            <FilterItem 
+            <FilterItem
                 filterTitle='Gluten-free'
                 value={isGlutenFree}
                 onChange={value => setIsGlutenFree(value)}
             />
-            <FilterItem 
+            <FilterItem
                 filterTitle='Vegan'
                 value={isVegan}
                 onChange={value => setIsVegan(value)}
             />
-            <FilterItem 
+            <FilterItem
                 filterTitle='Vegetarian'
                 value={isVegetarian}
                 onChange={value => setIsVegetarian(value)}
             />
-            <FilterItem 
+            <FilterItem
                 filterTitle='Lactose-free'
                 value={isLactoseFree}
                 onChange={value => setIsLactoseFree(value)}
@@ -82,7 +96,7 @@ FiltersScreen.navigationOptions = navigationData => {
                         title='Save'
                         iconName='save'
                         iconSize={23}
-                        onPress={() => { }}
+                        onPress={navigationData.navigation.getParam('save')}
                         buttonStyle={styles.headerSaveButton}
                     />
                 </HeaderButtons>
@@ -98,7 +112,7 @@ const styles = StyleSheet.create({
     },
     headerSaveButton: {
         fontFamily: 'open-sans',
-    },  
+    },
     filterContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
