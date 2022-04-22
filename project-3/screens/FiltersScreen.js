@@ -33,7 +33,6 @@ const FiltersScreen = props => {
             vegetarian: isVegetarian,
             lactoseFree: isLactoseFree,
         }
-        console.log(appliedFilters)
     }, [isGlutenFree, isVegan, isVegetarian, isLactoseFree])
 
     useEffect(() => {
@@ -67,6 +66,8 @@ const FiltersScreen = props => {
 }
 
 FiltersScreen.navigationOptions = navigationData => {
+    const filters = navigationData.navigation.getParam('save')
+    console.log(filters)
     return {
         headerTitle: () => {
             return (

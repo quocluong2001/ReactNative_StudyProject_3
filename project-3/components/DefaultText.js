@@ -1,21 +1,18 @@
-import React from 'react';
-import { Text, StyleSheet } from 'react-native';
+import React from "react";
+import { Text, StyleSheet } from "react-native";
 
-const DefaultText = props => {
-    return (
-        <Text
-            {...props}
-            style={{ ...styles.defaultText, ...props.style }}
-        >
-            {props.children}
-        </Text>
-    )
-}
+const DefaultText = (props) => {
+  return (
+    <Text {...props} style={{ ...styles.defaultText, ...props.style }}>
+      {props.children}
+    </Text>
+  );
+};
 
 const styles = StyleSheet.create({
-    defaultText: {
-        fontFamily: 'open-sans'
-    }
-})
+  defaultText: {
+    fontFamily: "open-sans",
+  },
+});
 
-export default DefaultText
+export default DefaultText;
