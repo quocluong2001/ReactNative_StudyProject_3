@@ -1,3 +1,5 @@
+//! ANOTHER WAY OF FETCHING FONTS INSTEAD OF USING useFonts HOOK
+
 import * as Font from "expo-font";
 
 const fetchFonts = async () => {
