@@ -14,12 +14,16 @@ const CategoriesScreen = (props) => {
         color={{ backgroundColor: itemData.item.color }}
         title={itemData.item.title}
         onSelect={() => {
-          props.navigation.navigate({
-            routeName: "CategoryMeals",
-            params: {
-              CategoryId: itemData.item.id,
-            },
-          });
+          //! React navigation 4.x
+          // props.navigation.navigate({
+          //   routeName: "CategoryMeals",
+          //   params: {
+          //     CategoryId: itemData.item.id,
+          //   },
+          // });
+          
+          //! React navigation 6.x
+          props.navigation.navigate("MealsOverview")
         }}
       />
     );

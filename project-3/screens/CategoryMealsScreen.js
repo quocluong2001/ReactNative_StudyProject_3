@@ -7,12 +7,12 @@ import MealsList from "../components/MealsList";
 
 const CategoryMealsScreen = (props) => {
   const allMeals = useSelector((state) => state.meals.meals);
-  const catId = props.navigation.getParam("CategoryId");
+  // const catId = props.navigation.getParam("CategoryId");
   const displayedMeals = allMeals.filter(
-    (meal) => meal.categoryIds.indexOf(catId) >= 0
+    (meal) => meal.categoryIds.indexOf("c1") >= 0
   );
 
-  return <MealsList listData={displayedMeals} navigation={props.navigation} />;
+  return <MealsList listData={displayedMeals} />;
 };
 
 CategoryMealsScreen.navigationOptions = (navigationData) => {
