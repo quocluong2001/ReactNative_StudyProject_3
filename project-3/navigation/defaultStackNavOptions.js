@@ -1,9 +1,9 @@
-const defaultStackNavOptions = options => {
-    return ({
-        ...options,
-        headerTintColor: 'white',
-        headerTitleAlign: 'center',
-    })
+function defaultStackNavOptions(options) {
+  return {
+    ...options,
+    headerTintColor: "white",
+    headerTitleAlign: "center",
+  };
 }
 
-export default defaultStackNavOptions
+export default defaultStackNavOptions;

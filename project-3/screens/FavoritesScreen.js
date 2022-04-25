@@ -8,7 +8,7 @@ import HeaderTitleText from "../components/HeaderTitleText";
 import CustomHeaderButton from "../components/CustomHeaderButton";
 import DefaultText from "../components/DefaultText";
 
-const FavoritesScreen = (props) => {
+function FavoritesScreen(props) {
   const favMeals = useSelector((state) => state.meals.favoriteMeals);
 
   if (favMeals.length === 0 || !favMeals) {
@@ -20,7 +20,7 @@ const FavoritesScreen = (props) => {
   }
 
   return <MealsList listData={favMeals} navigation={props.navigation} />;
-};
+}
 
 FavoritesScreen.navigationOptions = (navigationData) => {
   return {

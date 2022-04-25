@@ -1,13 +1,16 @@
 import React from "react";
 import { StyleSheet, FlatList } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import { useNavigation } from "@react-navigation/native";
 
 import { CATEGORIES } from "../data/dummy-data";
 import CategoryGridTile from "../components/CategoryGridTile";
 import HeaderTitleText from "../components/HeaderTitleText";
 import CustomHeaderButton from "../components/CustomHeaderButton";
 
-const CategoriesScreen = (props) => {
+function CategoriesScreen(props) {
+  const navigation = useNavigation();
+
   const renderListItem = (itemData) => {
     return (
       <CategoryGridTile
@@ -21,9 +24,12 @@ const CategoriesScreen = (props) => {
           //     CategoryId: itemData.item.id,
           //   },
           // });
-          
+
           //! React navigation 6.x
-          props.navigation.navigate("MealsOverview")
+          navigation.navigate("MealsOverview", {
+            categoryId: itemData.item.id,
+            categoryTitle: itemData.item.title,
+          });
         }}
       />
     );
@@ -36,7 +42,7 @@ const CategoriesScreen = (props) => {
       renderItem={(itemData) => renderListItem(itemData)}
     />
   );
-};
+}
 
 CategoriesScreen.navigationOptions = (navigationData) => {
   return {

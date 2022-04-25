@@ -5,7 +5,7 @@ import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import CustomHeaderButton from "../components/CustomHeaderButton";
 import HeaderTitleText from "../components/HeaderTitleText";
 
-const FilterItem = (props) => {
+function FilterItem(props) {
   return (
     <View style={styles.filterContainer}>
       <Text style={styles.filterTitle}>{props.filterTitle}</Text>
@@ -18,7 +18,7 @@ const FilterItem = (props) => {
       />
     </View>
   );
-};
+}
 
 const FiltersScreen = (props) => {
   const [isGlutenFree, setIsGlutenFree] = useState(false);

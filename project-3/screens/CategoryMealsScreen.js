@@ -1,20 +1,35 @@
-import React from "react";
+import React, { useLayoutEffect } from "react";
 import { useSelector } from "react-redux";
+import { useRoute, useNavigation } from "@react-navigation/native";
 
 import { CATEGORIES } from "../data/dummy-data";
 import HeaderTitleText from "../components/HeaderTitleText";
 import MealsList from "../components/MealsList";
 
-const CategoryMealsScreen = (props) => {
+function CategoryMealsScreen(props) {
+  //! React Navigation 6.x
+  const navigation = useNavigation();
+  const route = useRoute();
+
+  const catId = route.params.categoryId;
+  const headerTitle = route.params.categoryTitle;
+
   const allMeals = useSelector((state) => state.meals.meals);
-  // const catId = props.navigation.getParam("CategoryId");
   const displayedMeals = allMeals.filter(
-    (meal) => meal.categoryIds.indexOf("c1") >= 0
+    (meal) => meal.categoryIds.indexOf(catId) >= 0
   );
 
-  return <MealsList listData={displayedMeals} />;
-};
+  //! Configure navigation options React Navigation 6.x
+  useLayoutEffect(() => {
+    props.navigation.setOptions({
+      headerTitle: headerTitle,
+    });
+  }, [navigation, headerTitle]);
 
+  return <MealsList listData={displayedMeals} />;
+}
+
+//! Configure navigation options React Navigation 4.x
 CategoryMealsScreen.navigationOptions = (navigationData) => {
   const catId = navigationData.navigation.getParam("CategoryId");
   const selectedCategory = CATEGORIES.find((category) => category.id === catId);

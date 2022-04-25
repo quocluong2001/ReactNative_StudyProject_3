@@ -10,7 +10,7 @@ import {
 import DefaultText from "./DefaultText";
 import { Ionicons } from "@expo/vector-icons";
 
-const MealItem = (props) => {
+function MealItem(props) {
   return (
     <View style={styles.mealItem}>
       <Pressable
@@ -47,7 +47,7 @@ const MealItem = (props) => {
       </Pressable>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   mealItem: {

@@ -1,21 +1,21 @@
-import { createStackNavigator } from "react-navigation-stack"
+import { createStackNavigator } from "react-navigation-stack";
 
-import FiltersScreen from "../screens/FiltersScreen"
-import defaultStackNavOptions from "./defaultStackNavOptions"
+import FiltersScreen from "../screens/FiltersScreen";
+import defaultStackNavOptions from "./defaultStackNavOptions";
 
 const FiltersStackNavigator = createStackNavigator(
-    {
-        Filters: {
-            screen: FiltersScreen
-        }
+  {
+    Filters: {
+      screen: FiltersScreen,
     },
-    {
-        defaultNavigationOptions: defaultStackNavOptions({
-            headerStyle: {
-                backgroundColor: 'blue'
-            }
-        })
-    }
-)
+  },
+  {
+    defaultNavigationOptions: defaultStackNavOptions({
+      headerStyle: {
+        backgroundColor: "blue",
+      },
+    }),
+  }
+);
 
-export default FiltersStackNavigator
+export default FiltersStackNavigator;

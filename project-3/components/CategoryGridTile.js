@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, Platform, Pressable } from "react-native";
 
-const CategoryGridTile = (props) => {
+function CategoryGridTile(props) {
   return (
     <View style={styles.gridItem}>
       <Pressable
@@ -21,7 +21,7 @@ const CategoryGridTile = (props) => {
       </Pressable>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   gridItem: {

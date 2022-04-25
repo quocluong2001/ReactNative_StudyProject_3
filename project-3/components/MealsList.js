@@ -5,8 +5,8 @@ import { useNavigation } from "@react-navigation/native";
 
 import MealItem from "./MealItem";
 
-const MealsList = (props) => {
-  const navigation  = useNavigation() //! React Navigation 6.x
+function MealsList(props) {
+  const navigation = useNavigation(); //! React Navigation 6.x
   const favMeals = useSelector((state) => state.meals.favoriteMeals);
 
   const renderMealItem = (itemData) => {
@@ -29,7 +29,7 @@ const MealsList = (props) => {
               isFav: isFavorite,
             },
           });
-          
+
           //! React Navigation 6.x
         }}
       />
@@ -46,7 +46,7 @@ const MealsList = (props) => {
       />
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   list: {

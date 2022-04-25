@@ -9,13 +9,13 @@ import CustomHeaderButton from "../components/CustomHeaderButton";
 import DefaultText from "../components/DefaultText";
 import { toggleFav } from "../store/actions/meals";
 
-const ListItem = (props) => {
+function ListItem(props) {
   return (
     <View style={styles.listItem}>
       <DefaultText>{props.children}</DefaultText>
     </View>
   );
-};
+}
 
 const MealDetailScreen = (props) => {
   const mealId = props.navigation.getParam("mealId");

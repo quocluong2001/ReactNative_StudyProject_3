@@ -7,17 +7,17 @@ const initialState = {
   favoriteMeals: [],
 };
 
-const removeFavoriteMeal = (favoriteMeals, item) => {
+function removeFavoriteMeal(favoriteMeals, item) {
   return favoriteMeals.filter((meal) => meal.id != item.id);
-};
+}
 
-const addFavoriteMeal = (favoriteMeals, item) => {
+function addFavoriteMeal(favoriteMeals, item) {
   const updatedArray = [...favoriteMeals];
   updatedArray.unshift(item);
   return updatedArray;
-};
+}
 
-const toggleFavorite = (state, action) => {
+function toggleFavorite(state, action) {
   const favoriteMeal = state.favoriteMeals.find(
     (meal) => meal.id === action.payload
   );
@@ -34,15 +34,15 @@ const toggleFavorite = (state, action) => {
       favoriteMeals: addFavoriteMeal(state.favoriteMeals, meal),
     };
   }
-};
+}
 
-const mealsReducer = (state = initialState, action) => {
+function mealsReducer(state = initialState, action) {
   switch (action.type) {
     case TOGGLE_FAV:
       return toggleFavorite(state, action);
     default:
       return state;
   }
-};
+}
 
 export default mealsReducer;

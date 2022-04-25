@@ -1,13 +1,13 @@
 import React from "react";
 import { Text, StyleSheet } from "react-native";
 
-const DefaultText = (props) => {
+function DefaultText(props) {
   return (
-    <Text {...props} style={{ ...styles.defaultText, ...props.style }}>
+    <Text {...props} style={[styles.defaultText, props.style]}>
       {props.children}
     </Text>
   );
-};
+}
 
 const styles = StyleSheet.create({
   defaultText: {
