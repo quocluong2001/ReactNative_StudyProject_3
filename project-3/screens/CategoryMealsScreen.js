@@ -20,9 +20,10 @@ function CategoryMealsScreen(props) {
   );
 
   //! Configure navigation options React Navigation 6.x
+  //! Update navigation options when navigation props changed
   useLayoutEffect(() => {
-    props.navigation.setOptions({
-      headerTitle: headerTitle,
+    navigation.setOptions({
+      title: headerTitle,
     });
   }, [navigation, headerTitle]);
 

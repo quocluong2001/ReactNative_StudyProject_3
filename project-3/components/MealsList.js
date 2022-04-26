@@ -6,10 +6,12 @@ import { useNavigation } from "@react-navigation/native";
 import MealItem from "./MealItem";
 
 function MealsList(props) {
-  const navigation = useNavigation(); //! React Navigation 6.x
+  //! React Navigation 6.x
+  const navigation = useNavigation();
+
   const favMeals = useSelector((state) => state.meals.favoriteMeals);
 
-  const renderMealItem = (itemData) => {
+  function renderMealItem(itemData) {
     const isFavorite = favMeals.some((meal) => meal.id === itemData.item.id);
 
     return (
@@ -21,20 +23,25 @@ function MealsList(props) {
         affordability={itemData.item.affordability}
         onSelectMeal={() => {
           //! React Navigation 4.x
-          navigation.navigate({
-            routeName: "MealDetail",
-            params: {
-              mealId: itemData.item.id,
-              mealTitle: itemData.item.title,
-              isFav: isFavorite,
-            },
-          });
+          // navigation.navigate({
+          //   routeName: "MealDetail",
+          //   params: {
+          //     mealId: itemData.item.id,
+          //     mealTitle: itemData.item.title,
+          //     isFav: isFavorite,
+          //   },
+          // });
 
           //! React Navigation 6.x
+          navigation.navigate("MealDetail", {
+            mealId: itemData.item.id,
+            mealTitle: itemData.item.title,
+            isFav: isFavorite,
+          });
         }}
       />
     );
-  };
+  }
 
   return (
     <View style={styles.list}>

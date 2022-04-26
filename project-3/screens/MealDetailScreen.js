@@ -1,8 +1,9 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect, useCallback, useLayoutEffect } from "react";
 import { View, StyleSheet, Image, ScrollView, Text } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { Ionicons } from "@expo/vector-icons";
 import { useSelector, useDispatch } from "react-redux";
+import { useRoute, useNavigation } from "@react-navigation/native";
 
 import HeaderTitleText from "../components/HeaderTitleText";
 import CustomHeaderButton from "../components/CustomHeaderButton";
@@ -17,8 +18,20 @@ function ListItem(props) {
   );
 }
 
-const MealDetailScreen = (props) => {
-  const mealId = props.navigation.getParam("mealId");
+function MealDetailScreen(props) {
+  //! React Navigation 4.x
+  // const mealId = props.navigation.getParam("mealId");
+
+  //! React Navigation 6.x
+  const route = useRoute();
+  const navigation = useNavigation();
+
+  const mealId = route.params.mealId;
+  const mealTitle = route.params.mealTitle;
+  const isFav = route.params.isFav;
+
+  const dispatch = useDispatch();
+
   const allMeals = useSelector((state) => state.meals.meals);
 
   const selectedMeal = allMeals.find((meal) => meal.id === mealId);
@@ -26,26 +39,44 @@ const MealDetailScreen = (props) => {
     state.meals.favoriteMeals.some((meal) => meal.id === mealId)
   );
 
-  const dispatch = useDispatch();
-
-  //* re-render only when meal id change
-  const toggleFavoriteHandler = useCallback(() => {
-    dispatch(toggleFav(mealId));
-  }, [mealId]);
-
-  //* forward dispatch action to navigation prop
-  useEffect(() => {
-    props.navigation.setParams({
-      toggleFavorite: toggleFavoriteHandler,
+  //! Configure navigation options React Navigation 6.x
+  //! Update navigation options when navigation props changed
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      title: mealTitle,
+      headerRight: () => (
+        <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+          <Item
+            title="Favorite"
+            iconName={isFavorite ? "ios-star" : "ios-star-outline"}
+            onPress={() => {
+              dispatch(toggleFav(mealId));
+            }}
+          />
+        </HeaderButtons>
+      ),
     });
-  }, [toggleFavoriteHandler]);
+  }, [navigation, mealTitle, mealId]);
 
-  //* forward 'check whether meal is favorite' to navigation prop
-  useEffect(() => {
-    props.navigation.setParams({
-      isFav: isFavorite,
-    });
-  }, [isFavorite]);
+  //! React Navigation 4.x
+  // //* re-render only when meal id change
+  // const toggleFavoriteHandler = useCallback(() => {
+  //   dispatch(toggleFav(mealId));
+  // }, [mealId]);
+
+  // //* forward dispatch action to navigation prop
+  // useEffect(() => {
+  //   props.navigation.setParams({
+  //     toggleFavorite: toggleFavoriteHandler,
+  //   });
+  // }, [toggleFavoriteHandler]);
+
+  // //* forward 'check whether meal is favorite' to navigation prop
+  // useEffect(() => {
+  //   props.navigation.setParams({
+  //     isFav: isFavorite,
+  //   });
+  // }, [isFavorite]);
 
   return (
     <ScrollView>
@@ -74,30 +105,30 @@ const MealDetailScreen = (props) => {
       ))}
     </ScrollView>
   );
-};
+}
 
-MealDetailScreen.navigationOptions = (navigationData) => {
-  const mealTitle = navigationData.navigation.getParam("mealTitle");
-  const toggleFav = navigationData.navigation.getParam("toggleFavorite");
-  const isFav = navigationData.navigation.getParam("isFav");
+// MealDetailScreen.navigationOptions = (navigationData) => {
+//   const mealTitle = navigationData.navigation.getParam("mealTitle");
+//   const toggleFav = navigationData.navigation.getParam("toggleFavorite");
+//   const isFav = navigationData.navigation.getParam("isFav");
 
-  return {
-    headerTitle: () => {
-      return <HeaderTitleText>{mealTitle}</HeaderTitleText>;
-    },
-    headerRight: () => {
-      return (
-        <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
-          <Item
-            title="Favorite"
-            iconName={isFav ? "ios-star" : "ios-star-outline"}
-            onPress={toggleFav}
-          />
-        </HeaderButtons>
-      );
-    },
-  };
-};
+//   return {
+//     headerTitle: () => {
+//       return <HeaderTitleText>{mealTitle}</HeaderTitleText>;
+//     },
+//     headerRight: () => {
+//       return (
+//         <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+//           <Item
+//             title="Favorite"
+//             iconName={isFav ? "ios-star" : "ios-star-outline"}
+//             onPress={toggleFav}
+//           />
+//         </HeaderButtons>
+//       );
+//     },
+//   };
+// };
 
 const styles = StyleSheet.create({
   image: {
