@@ -1,14 +1,13 @@
 import { View } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-import MealsDrawerNavigator from "./MealsDrawerNavigator";
-import CategoryMealsScreen from "../../screens/CategoryMealsScreen";
+import FavoritesScreen from "../../screens/FavoritesScreen";
 import MealDetailScreen from "../../screens/MealDetailScreen";
 import defaultHeaderOptions from "./defaultHeaderOptions";
 
 const Stack = createNativeStackNavigator();
 
-function MealsMainStackNavigator() {
+function FavStackNavigator() {
   return (
     /*
     ! ISSUE: Blank screen when native stack is nested inside material bottom tabs.
@@ -17,8 +16,8 @@ function MealsMainStackNavigator() {
     */
     <View style={{ flex: 1 }} collapsable={false}>
       <Stack.Navigator
-        id="MealsMainStack"
-        initialRouteName="MealsCategories"
+        id="FavStack"
+        initialRouteName="FavMeals"
         //! General navigation options
         screenOptions={{
           ...defaultHeaderOptions,
@@ -26,18 +25,14 @@ function MealsMainStackNavigator() {
         }}
       >
         <Stack.Screen
-          name="MealsCategories"
-          component={MealsDrawerNavigator}
-          //! Screen navigation options
-          options={{
-            headerShown: false,
-          }}
+          name="FavMeals"
+          component={FavoritesScreen}
+          options={{ title: "Favorites" }}
         />
-        <Stack.Screen name="MealsOverview" component={CategoryMealsScreen} />
-        <Stack.Screen name="MealDetail" component={MealDetailScreen} />
+        <Stack.Screen name="FavMealDetail" component={MealDetailScreen} />
       </Stack.Navigator>
     </View>
   );
 }
 
-export default MealsMainStackNavigator;
+export default FavStackNavigator;

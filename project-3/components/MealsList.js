@@ -9,11 +9,7 @@ function MealsList(props) {
   //! React Navigation 6.x
   const navigation = useNavigation();
 
-  const favMeals = useSelector((state) => state.meals.favoriteMeals);
-
   function renderMealItem(itemData) {
-    const isFavorite = favMeals.some((meal) => meal.id === itemData.item.id);
-
     return (
       <MealItem
         image={itemData.item.imageUrl}
@@ -33,11 +29,22 @@ function MealsList(props) {
           // });
 
           //! React Navigation 6.x
-          navigation.navigate("MealDetail", {
-            mealId: itemData.item.id,
-            mealTitle: itemData.item.title,
-            isFav: isFavorite,
-          });
+          //* At MealsMainStack Navigator
+          if (navigation.getParent("MealsMainStack")) {
+            navigation.navigate("MealDetail", {
+              mealId: itemData.item.id,
+              mealTitle: itemData.item.title,
+            });
+          }
+          //* At FavStack Navigator
+          else if (navigation.getParent("FavStack")) {
+            navigation.navigate("FavMealDetail", {
+              mealId: itemData.item.id,
+              mealTitle: itemData.item.title,
+            });
+          } else {
+            console.log("Error: Not found parent navigator!");
+          }
         }}
       />
     );

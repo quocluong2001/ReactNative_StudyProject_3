@@ -1,11 +1,10 @@
-import React, { useEffect, useCallback, useLayoutEffect } from "react";
+import React, { useState, useLayoutEffect, useEffect } from "react";
 import { View, StyleSheet, Image, ScrollView, Text } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { Ionicons } from "@expo/vector-icons";
 import { useSelector, useDispatch } from "react-redux";
 import { useRoute, useNavigation } from "@react-navigation/native";
 
-import HeaderTitleText from "../components/HeaderTitleText";
 import CustomHeaderButton from "../components/CustomHeaderButton";
 import DefaultText from "../components/DefaultText";
 import { toggleFav } from "../store/actions/meals";
@@ -19,6 +18,7 @@ function ListItem(props) {
 }
 
 function MealDetailScreen(props) {
+  const dispatch = useDispatch();
   //! React Navigation 4.x
   // const mealId = props.navigation.getParam("mealId");
 
@@ -28,19 +28,27 @@ function MealDetailScreen(props) {
 
   const mealId = route.params.mealId;
   const mealTitle = route.params.mealTitle;
-  const isFav = route.params.isFav;
-
-  const dispatch = useDispatch();
 
   const allMeals = useSelector((state) => state.meals.meals);
-
   const selectedMeal = allMeals.find((meal) => meal.id === mealId);
+
   const isFavorite = useSelector((state) =>
     state.meals.favoriteMeals.some((meal) => meal.id === mealId)
   );
+  const [favIcon, setFavIcon] = useState(
+    isFavorite ? "ios-star" : "ios-star-outline"
+  );
+
+  useEffect(() => {
+    if (isFavorite === true) {
+      setFavIcon("ios-star");
+    } else {
+      setFavIcon("ios-star-outline");
+    }
+  }, [isFavorite]);
 
   //! Configure navigation options React Navigation 6.x
-  //! Update navigation options when navigation props changed
+  //! Update navigation options when navigation props change
   useLayoutEffect(() => {
     navigation.setOptions({
       title: mealTitle,
@@ -48,7 +56,7 @@ function MealDetailScreen(props) {
         <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
           <Item
             title="Favorite"
-            iconName={isFavorite ? "ios-star" : "ios-star-outline"}
+            iconName={favIcon}
             onPress={() => {
               dispatch(toggleFav(mealId));
             }}
@@ -56,7 +64,7 @@ function MealDetailScreen(props) {
         </HeaderButtons>
       ),
     });
-  }, [navigation, mealTitle, mealId]);
+  }, [navigation, mealTitle, mealId, favIcon]);
 
   //! React Navigation 4.x
   // //* re-render only when meal id change

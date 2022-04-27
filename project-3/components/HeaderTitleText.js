@@ -4,8 +4,9 @@ import { Dimensions } from "react-native";
 
 function HeaderTitleText(props) {
   const { width } = Dimensions.get("window");
+
   return (
-    <View style={{ width: width * 0.7 }}>
+    <View style={{ width: width * 0.6 }}>
       <Text
         {...props}
         numberOfLines={2}

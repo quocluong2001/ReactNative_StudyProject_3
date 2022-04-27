@@ -3,7 +3,7 @@ import { Ionicons } from "@expo/vector-icons";
 
 import CategoriesScreen from "../../screens/CategoriesScreen";
 import FiltersScreen from "../../screens/FiltersScreen";
-import HeaderTitleText from "../../components/HeaderTitleText";
+import defaultHeaderOptions from "./defaultHeaderOptions";
 
 const Drawer = createDrawerNavigator();
 
@@ -13,15 +13,7 @@ function MealsDrawerNavigator() {
       initialRouteName="AllCategories"
       //! General navigation options
       screenOptions={{
-        headerStyle: {
-          backgroundColor: "#0000FF",
-        },
-        headerTintColor: "#FFFFFF",
-        headerTitle: ({ tintColor, children }) => (
-          <HeaderTitleText style={{ color: tintColor }}>
-            {children}
-          </HeaderTitleText>
-        ),
+        ...defaultHeaderOptions,
         drawerActiveTintColor: "#0000FF",
         drawerLabelStyle: {
           fontFamily: "open-sans-bold",

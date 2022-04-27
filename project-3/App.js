@@ -12,7 +12,7 @@ import MainNavigator from "./navigation/MealsNavigators";
 import mealsReducer from "./store/reducers/meals";
 
 //! React Navigation 6.x
-import MealsMainStackNavigator from "./navigation/6.x/MealsMainStackNavigator";
+import MealsMainTabNavigator from "./navigation/6.x/MealsMainTabNavigator";
 
 const rootReducer = combineReducers({
   meals: mealsReducer,
@@ -33,7 +33,7 @@ export default function App() {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <MealsMainStackNavigator />
+        <MealsMainTabNavigator />
       </NavigationContainer>
     </Provider>
   );

@@ -19,7 +19,7 @@ function FavoritesScreen(props) {
     );
   }
 
-  return <MealsList listData={favMeals} navigation={props.navigation} />;
+  return <MealsList listData={favMeals} />;
 }
 
 FavoritesScreen.navigationOptions = (navigationData) => {
