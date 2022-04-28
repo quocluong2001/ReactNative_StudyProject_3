@@ -1,9 +1,17 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, {
+  useState,
+  // useEffect,
+  // useCallback,
+  useLayoutEffect,
+} from "react";
 import { View, Text, StyleSheet, Switch } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import { useNavigation } from "@react-navigation/native";
+import { useDispatch } from "react-redux";
 
 import CustomHeaderButton from "../components/CustomHeaderButton";
-import HeaderTitleText from "../components/HeaderTitleText";
+// import HeaderTitleText from "../components/HeaderTitleText";
+import { applyFilters } from "../store/actions/meals";
 
 function FilterItem(props) {
   return (
@@ -20,24 +28,55 @@ function FilterItem(props) {
   );
 }
 
-const FiltersScreen = (props) => {
+function FiltersScreen(props) {
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
   const [isGlutenFree, setIsGlutenFree] = useState(false);
   const [isVegan, setIsVegan] = useState(false);
   const [isVegetarian, setIsVegetarian] = useState(false);
   const [isLactoseFree, setIsLactoseFree] = useState(false);
 
-  const saveFilters = useCallback(() => {
+  //! React Navigation 4.x
+  // const saveFilters = useCallback(() => {
+  //   const appliedFilters = {
+  //     glutenFree: isGlutenFree,
+  //     vegan: isVegan,
+  //     vegetarian: isVegetarian,
+  //     lactoseFree: isLactoseFree,
+  //   };
+  // }, [isGlutenFree, isVegan, isVegetarian, isLactoseFree]);
+
+  //! React Navigation 4.x
+  // useEffect(() => {
+  //   props.navigation.setParams({ save: saveFilters });
+  // }, [saveFilters]);
+
+  function saveButtonHandler() {
     const appliedFilters = {
       glutenFree: isGlutenFree,
       vegan: isVegan,
       vegetarian: isVegetarian,
       lactoseFree: isLactoseFree,
     };
-  }, [isGlutenFree, isVegan, isVegetarian, isLactoseFree]);
+    dispatch(applyFilters(appliedFilters));
+  }
 
-  useEffect(() => {
-    props.navigation.setParams({ save: saveFilters });
-  }, [saveFilters]);
+  //! React Navigation 6.x
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+          <Item
+            title="Save"
+            iconName="save"
+            iconSize={23}
+            onPress={saveButtonHandler}
+            buttonStyle={styles.headerSaveButton}
+          />
+        </HeaderButtons>
+      ),
+    });
+  });
 
   return (
     <View style={styles.screen}>
@@ -63,44 +102,45 @@ const FiltersScreen = (props) => {
       />
     </View>
   );
-};
+}
 
-FiltersScreen.navigationOptions = (navigationData) => {
-  const filters = navigationData.navigation.getParam("save");
-  console.log(filters);
-  return {
-    headerTitle: () => {
-      return <HeaderTitleText>Meals Filters</HeaderTitleText>;
-    },
-    headerLeft: () => {
-      return (
-        <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
-          <Item
-            title="Menu"
-            iconName="menu"
-            iconSize={25}
-            onPress={() => {
-              navigationData.navigation.toggleDrawer();
-            }}
-          />
-        </HeaderButtons>
-      );
-    },
-    headerRight: () => {
-      return (
-        <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
-          <Item
-            title="Save"
-            iconName="save"
-            iconSize={23}
-            onPress={navigationData.navigation.getParam("save")}
-            buttonStyle={styles.headerSaveButton}
-          />
-        </HeaderButtons>
-      );
-    },
-  };
-};
+//! React Navigation 4.x
+// FiltersScreen.navigationOptions = (navigationData) => {
+//   const filters = navigationData.navigation.getParam("save");
+//   console.log(filters);
+//   return {
+//     headerTitle: () => {
+//       return <HeaderTitleText>Meals Filters</HeaderTitleText>;
+//     },
+//     headerLeft: () => {
+//       return (
+//         <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+//           <Item
+//             title="Menu"
+//             iconName="menu"
+//             iconSize={25}
+//             onPress={() => {
+//               navigationData.navigation.toggleDrawer();
+//             }}
+//           />
+//         </HeaderButtons>
+//       );
+//     },
+//     headerRight: () => {
+//       return (
+//         <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+//           <Item
+//             title="Save"
+//             iconName="save"
+//             iconSize={23}
+//             onPress={navigationData.navigation.getParam("save")}
+//             buttonStyle={styles.headerSaveButton}
+//           />
+//         </HeaderButtons>
+//       );
+//     },
+//   };
+// };
 
 const styles = StyleSheet.create({
   screen: {

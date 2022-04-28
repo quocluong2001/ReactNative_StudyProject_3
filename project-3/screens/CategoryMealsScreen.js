@@ -14,7 +14,7 @@ function CategoryMealsScreen(props) {
   const catId = route.params.categoryId;
   const headerTitle = route.params.categoryTitle;
 
-  const allMeals = useSelector((state) => state.meals.meals);
+  const allMeals = useSelector((state) => state.meals.filterMeals);
   const displayedMeals = allMeals.filter(
     (meal) => meal.categoryIds.indexOf(catId) >= 0
   );

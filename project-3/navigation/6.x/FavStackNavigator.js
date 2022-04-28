@@ -22,6 +22,9 @@ function FavStackNavigator() {
         screenOptions={{
           ...defaultHeaderOptions,
           animation: "slide_from_right",
+          headerStyle: {
+            backgroundColor: "orange",
+          },
         }}
       >
         <Stack.Screen
