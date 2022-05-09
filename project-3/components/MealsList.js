@@ -1,6 +1,5 @@
 import React from "react";
 import { View, FlatList, StyleSheet } from "react-native";
-import { useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 
 import MealItem from "./MealItem";

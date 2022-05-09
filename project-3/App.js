@@ -8,17 +8,24 @@ import { useFonts } from "expo-font";
 import { NavigationContainer } from "@react-navigation/native";
 
 //! React Navigation 4.x
-import MainNavigator from "./navigation/MealsNavigators";
-import mealsReducer from "./store/reducers/meals";
+// import MainNavigator from "./navigation/MealsNavigators";
+
+// import mealsReducer from "./store/reducers/meals";
 
 //! React Navigation 6.x
 import MealsMainTabNavigator from "./navigation/6.x/MealsMainTabNavigator";
 
-const rootReducer = combineReducers({
-  meals: mealsReducer,
-});
+//! Context API
+// import MealContextProvider from "./store/context/MealContext";
 
-const store = createStore(rootReducer);
+//! Redux toolkit
+import store from "./store/store";
+
+// const rootReducer = combineReducers({
+//   meals: mealsReducer,
+// });
+
+// const store = createStore(rootReducer);
 
 export default function App() {
   const [isFontsLoaded] = useFonts({
@@ -32,9 +39,11 @@ export default function App() {
 
   return (
     <Provider store={store}>
+      {/* <MealContextProvider> */}
       <NavigationContainer>
         <MealsMainTabNavigator />
       </NavigationContainer>
+      {/* </MealContextProvider> */}
     </Provider>
   );
 }

@@ -1,6 +1,10 @@
+import { createReducer } from "@reduxjs/toolkit";
+
 import { MEALS } from "../../data/dummy-data";
-import { TOGGLE_FAV } from "../actions/meals";
-import { APPLY_FILTERS } from "../actions/meals";
+// import { TOGGLE_FAV } from "../actions/meals";
+// import { APPLY_FILTERS } from "../actions/meals";
+import { toggleFav } from "../actions/meals";
+import { applyFilters } from "../actions/meals";
 
 const initialState = {
   meals: MEALS,
@@ -8,15 +12,15 @@ const initialState = {
   favoriteMeals: [],
 };
 
-function removeFavoriteMeal(favoriteMeals, item) {
-  return favoriteMeals.filter((meal) => meal.id != item.id);
-}
+// function removeFavoriteMeal(favoriteMeals, item) {
+//   return favoriteMeals.filter((meal) => meal.id != item.id);
+// }
 
-function addFavoriteMeal(favoriteMeals, item) {
-  const updatedArray = [...favoriteMeals];
-  updatedArray.unshift(item);
-  return updatedArray;
-}
+// function addFavoriteMeal(favoriteMeals, item) {
+//   const updatedArray = [...favoriteMeals];
+//   updatedArray.unshift(item);
+//   return updatedArray;
+// }
 
 function toggleFavorite(state, action) {
   const favoriteMeal = state.favoriteMeals.find(
@@ -24,20 +28,16 @@ function toggleFavorite(state, action) {
   );
 
   if (favoriteMeal != undefined) {
-    return {
-      ...state,
-      favoriteMeals: removeFavoriteMeal(state.favoriteMeals, favoriteMeal),
-    };
+    state.favoriteMeals = state.favoriteMeals.filter(
+      (meal) => meal.id != action.payload
+    );
   } else {
     const meal = state.meals.find((meal) => meal.id === action.payload);
-    return {
-      ...state,
-      favoriteMeals: addFavoriteMeal(state.favoriteMeals, meal),
-    };
+    state.favoriteMeals.unshift(meal);
   }
 }
 
-function applyFilters(state, action) {
+function filter(state, action) {
   const filteredMeals = state.meals.filter((meal) => {
     if (
       action.payload.glutenFree &&
@@ -64,21 +64,29 @@ function applyFilters(state, action) {
     return true;
   });
 
-  return {
-    ...state,
-    filterMeals: filteredMeals,
-  };
+  state.filterMeals = filteredMeals;
 }
 
-function mealsReducer(state = initialState, action) {
-  switch (action.type) {
-    case TOGGLE_FAV:
-      return toggleFavorite(state, action);
-    case APPLY_FILTERS:
-      return applyFilters(state, action);
-    default:
-      return state;
-  }
-}
+// function mealsReducer(state = initialState, action) {
+//   switch (action.type) {
+//     case TOGGLE_FAV:
+//       return toggleFavorite(state, action);
+//     case APPLY_FILTERS:
+//       return applyFilters(state, action);
+//     default:
+//       return state;
+//   }
+// }
+
+const mealsReducer = createReducer(initialState, (builder) => {
+  builder
+    .addCase(toggleFav, (state, action) => {
+      toggleFavorite(state, action);
+    })
+    .addCase(applyFilters, (state, action) => {
+      filter(state, action);
+    })
+    .addDefaultCase((state) => state);
+});
 
 export default mealsReducer;

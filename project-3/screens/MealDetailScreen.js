@@ -1,4 +1,4 @@
-import React, { useState, useLayoutEffect, useEffect } from "react";
+import React, { useState, useLayoutEffect, useEffect, useContext } from "react";
 import { View, StyleSheet, Image, ScrollView, Text } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import { Ionicons } from "@expo/vector-icons";
@@ -8,6 +8,7 @@ import { useRoute, useNavigation } from "@react-navigation/native";
 import CustomHeaderButton from "../components/CustomHeaderButton";
 import DefaultText from "../components/DefaultText";
 import { toggleFav } from "../store/actions/meals";
+// import { MealContext } from "../store/context/MealContext";
 
 function ListItem(props) {
   return (
@@ -29,12 +30,33 @@ function MealDetailScreen(props) {
   const mealId = route.params.mealId;
   const mealTitle = route.params.mealTitle;
 
+  //! Redux
   const allMeals = useSelector((state) => state.meals.meals);
   const selectedMeal = allMeals.find((meal) => meal.id === mealId);
 
+  //! Context API
+  // const mealCtx = useContext(MealContext);
+  // const selectedMeal = mealCtx.meals.find((meal) => meal.id === mealId);
+
+  //! Redux
   const isFavorite = useSelector((state) =>
     state.meals.favoriteMeals.some((meal) => meal.id === mealId)
   );
+
+  console.log(isFavorite)
+
+  //! Context API
+  // const isFavorite = mealCtx.favoriteMeals.some((meal) => meal.id === mealId);
+  
+  //! Context API
+  // function favButtonHandler() {
+  //   if (isFavorite) {
+  //     mealCtx.removeFavoriteMeal(mealId);
+  //   } else {
+  //     mealCtx.addFavoriteMeal(mealId);
+  //   }
+  // }
+
   const [favIcon, setFavIcon] = useState(
     isFavorite ? "ios-star" : "ios-star-outline"
   );
@@ -57,9 +79,12 @@ function MealDetailScreen(props) {
           <Item
             title="Favorite"
             iconName={favIcon}
+            //! Redux
             onPress={() => {
               dispatch(toggleFav(mealId));
             }}
+            //! Context API
+            // onPress={favButtonHandler}
           />
         </HeaderButtons>
       ),
